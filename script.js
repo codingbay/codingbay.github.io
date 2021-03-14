@@ -30,11 +30,12 @@ let brushSize = brushSizes[0];
 resize(true);
 
 canvas.addEventListener('mousedown', setPosition);
-canvas.addEventListener('touchstart', setPosition);
 canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('touchmove', draw);
 canvas.addEventListener('mouseenter', setPosition);
 canvas.addEventListener('mouseup', setImageData);
+
+canvas.addEventListener('touchstart', setPosition);
+canvas.addEventListener('touchmove', draw);
 canvas.addEventListener('touchend', setImageData);
 canvas.addEventListener('touchcancel', setImageData);
 
