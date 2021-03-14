@@ -1,8 +1,13 @@
 const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
 let canvasLeft = canvas.offsetLeft;
 let canvasTop = canvas.offsetTop;
-const ctx = canvas.getContext('2d');
+
+let imageData;
+
 const pos = { x: 0, y: 0 };
+
 const colorPalette = [
   'black',
   'white',
@@ -22,20 +27,36 @@ const brushSizes = [5, 10, 20];
 let brushColor = colorPalette[0];
 let brushSize = brushSizes[0];
 
-resize();
+resize(true);
 
 canvas.addEventListener('mousedown', setPosition);
+canvas.addEventListener('touchstart', setPosition);
 canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('touchmove', draw);
 canvas.addEventListener('mouseenter', setPosition);
-window.addEventListener('resize', resize);
+canvas.addEventListener('mouseup', setImageData);
+canvas.addEventListener('touchend', setImageData);
+canvas.addEventListener('touchcancel', setImageData);
 
-function resize() {
+window.addEventListener('resize', function () {
+  resize(false);
+});
+
+function setImageData() {
+  imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+}
+
+function resize(init) {
   canvasLeft = canvas.offsetLeft;
   canvasTop = canvas.offsetTop;
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
-  ctx.fillStyle = 'white';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  if (init) {
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  }
+  ctx.putImageData(imageData, 0, 0);
 }
 
 function setPosition(event) {
@@ -44,7 +65,8 @@ function setPosition(event) {
 }
 
 function draw(event) {
-  if (event.buttons !== 1) return false;
+  if (event.buttons !== 1) return;
+
   ctx.beginPath();
   ctx.lineWidth = brushSize;
   ctx.lineCap = 'round';
