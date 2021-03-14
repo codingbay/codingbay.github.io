@@ -60,12 +60,20 @@ function resize(init) {
 }
 
 function setPosition(event) {
-  pos.x = event.clientX - canvasLeft;
-  pos.y = event.clientY - canvasTop;
+  let { clientX } = event;
+  let { clientY } = event;
+  if (event.touches) {
+    const [touch] = event.touches;
+    clientX = touch.clientX;
+    clientY = touch.clientY;
+  }
+
+  pos.x = clientX - canvasLeft;
+  pos.y = clientY - canvasTop;
 }
 
 function draw(event) {
-  if (event.buttons !== 1) return;
+  if (event.buttons !== 1 && !event.touches) return;
 
   ctx.beginPath();
   ctx.lineWidth = brushSize;
