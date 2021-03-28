@@ -1,26 +1,21 @@
+import Canvas, { resizeCanvas } from 'components/Canvas';
+import Palette from 'components/Palette';
+import Chat from 'components/Chat';
+
+import './styles.scss';
+
 const main = document.createElement('div');
 main.id = 'main';
-
-const canvas = document.createElement('canvas');
-canvas.id = 'canvas';
-
-const canvasContainer = document.createElement('div');
-canvasContainer.id = 'canvas-container';
-canvasContainer.appendChild(canvas);
 
 const leftSide = document.createElement('div');
 leftSide.id = 'left-side';
 
-const palette = document.createElement('div');
-palette.id = 'palette';
-
-const chat = document.createElement('chat');
-chat.id = 'chat';
-
-leftSide.appendChild(palette);
-leftSide.appendChild(chat);
+leftSide.appendChild(Palette);
+leftSide.appendChild(Chat);
 
 main.appendChild(leftSide);
-main.appendChild(canvasContainer);
+main.appendChild(Canvas);
 
 document.body.appendChild(main);
+
+resizeCanvas(true);
