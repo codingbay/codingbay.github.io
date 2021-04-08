@@ -14,9 +14,8 @@ let isEndAdded = false;
 
 function handleTileClick(event) {
   const { target } = event;
-  const clicked = target.getAttribute('clicked');
 
-  if (clicked === 'false') {
+  if (target.getAttribute('clicked') === 'false') {
     if (!isStartAdded) {
       isStartAdded = true;
       target.classList.add('startTile');
@@ -25,14 +24,21 @@ function handleTileClick(event) {
       isEndAdded = true;
       target.classList.add('endTile');
       target.setAttribute('clicked', true);
+    } else {
+      target.classList.add('wallTile');
+      target.setAttribute('clicked', true);
     }
   }
 }
 
 function handleTileMouseMove(event) {
   const { target, buttons } = event;
-  const clicked = target.getAttribute('clicked');
-  if (isStartAdded && isEndAdded && buttons === 1 && clicked === 'false') {
+  if (
+    isStartAdded &&
+    isEndAdded &&
+    buttons === 1 &&
+    target.getAttribute('clicked') === 'false'
+  ) {
     target.classList.add('wallTile');
     target.setAttribute('clicked', true);
   }
