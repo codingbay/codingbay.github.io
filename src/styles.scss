@@ -1,0 +1,23 @@
+#grid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 820px;
+}
+
+.tile {
+  border: 1px solid black;
+  height: 100px;
+  width: 100px;
+}
+
+.startTile {
+  background-color: blue;
+}
+
+.endTile {
+  background-color: red;
+}
+
+.wallTile {
+  background-color: black;
+}
